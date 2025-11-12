@@ -1,31 +1,30 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-contract Bank{
-    uint256 balance=0;
+contract Bank {
+    uint256 private balance;
     address public accOwner;
 
-    constructor(){
+    constructor() {
         accOwner = msg.sender;
     }
 
-    // Deposit
-    function Deposit() public payable{
-        require(accOwner==msg.sender, "Only owner of this account can deposit");
-        require(msg.value>0, "Amount should be greater than 0");
-        balance+=msg.value;
+    function deposit() public payable {
+        require(accOwner == msg.sender, "Only owner can deposit");
+        require(msg.value > 0, "Amount should be greater than 0");
+        balance += msg.value;
     }
 
-    //Withdraw
-    function Withdraw() public payable {
+    function withdraw(uint256 amount) public {
         require(msg.sender == accOwner, "You are not the owner of this account");
-        require(msg.value>0, "Withdraw money should be greater than 0");
-        balance -= msg.value;
+        require(amount <= balance, "Not enough balance!");
+
+        balance -= amount;
+        payable(msg.sender).transfer(amount);
     }
 
-    //Show balance
-    function showBalance() public view returns(uint256){
-        require(accOwner==msg.sender, "You are not an account owner");
+    function showBalance() public view returns (uint256) {
+        require(accOwner == msg.sender, "You are not the account owner");
         return balance;
     }
 }
