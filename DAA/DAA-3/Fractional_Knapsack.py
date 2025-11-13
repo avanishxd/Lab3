@@ -1,38 +1,31 @@
 class Item:
-    def __init__(self, value, weight):   # ✅ Correct constructor
+    def __init__(self, value, weight):   
         self.value = value
         self.weight = weight
-        self.ratio = value / weight  # value-to-weight ratio
+        self.ratio = value / weight  
 
 
 def fractional_knapsack(capacity, values, weights):
-    # Step 1: Create list of items
+    
     items = [Item(values[i], weights[i]) for i in range(len(values))]
+
+    items.sort(key=lambda x: x.ratio, reverse=True)   
+    total_value = 0.0 
     
-    # Step 2: Sort items by value/weight ratio in descending order
-    items.sort(key=lambda x: x.ratio, reverse=True)
-    
-    total_value = 0.0  # Final profit
-    
-    # Step 3: Take items until knapsack is full
     for item in items:
         if capacity >= item.weight:
-            # Take full item
             capacity -= item.weight
             total_value += item.value
         else:
-            # Take fraction of item
             total_value += item.value * (capacity / item.weight)
-            break  # Knapsack is full
+            break  
     
     return total_value
 
-
-# Driver code
-if __name__ == "__main__":   # ✅ Correct main check
-    values = [60, 100, 120]   # Profits
-    weights = [10, 20, 30]    # Weights
-    capacity = 50             # Knapsack 
+if __name__ == "__main__":   
+    values = [60, 100, 120]   
+    weights = [10, 20, 30]    
+    capacity = 50           
     
     max_value = fractional_knapsack(capacity, values, weights)
-    print("Maximum value in Knapsack =", max_value)  # ✅ Fixed print
+    print("Maximum value in Knapsack =", max_value)  
