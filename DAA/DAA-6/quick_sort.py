@@ -26,3 +26,5 @@ arr = [10, 7, 8, 9, 1, 5]
 print("Original Array:", arr)
 print("Deterministic Quick Sort:", deterministic_quick_sort(arr))
 print("Randomized Quick Sort:", randomized_quick_sort(arr))
+print("Time Complexity: Best Case: O(n log n), Average Case: O(n log n), Worst Case: O(n^2)")
+print("Space Complexity: O(n)")
